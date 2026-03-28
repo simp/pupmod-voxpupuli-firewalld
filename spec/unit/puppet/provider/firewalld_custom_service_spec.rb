@@ -18,7 +18,7 @@ describe provider_class do
     let(:resource) do
       Puppet::Type.type(:firewalld_custom_service).new(
         ensure: :present,
-        name: 'test_service'
+        name: 'test_service',
       )
     end
 
@@ -33,12 +33,12 @@ describe provider_class do
       expect(provider.ports).to eq([
                                      {
                                        'port' => '123',
-                                       'protocol' => 'tcp'
+                                       'protocol' => 'tcp',
                                      },
                                      {
                                        'port' => '456',
-                                       'protocol' => 'udp'
-                                     }
+                                       'protocol' => 'udp',
+                                     },
                                    ])
     end
 
@@ -67,7 +67,7 @@ describe provider_class do
     let(:resource) do
       Puppet::Type.type(:firewalld_custom_service).new(
         ensure: :absent,
-        name: 'test_service'
+        name: 'test_service',
       )
     end
 
@@ -96,12 +96,12 @@ describe provider_class do
           '234/udp',
           { 'port' => 345, 'protocol' => 'udp' },
           { 'port' => '456', 'protocol' => 'tcp' },
-          { 'protocol' => 'dccp' }
+          { 'protocol' => 'dccp' },
         ],
         protocols: %w[foo bar baz],
         modules: %w[nf_thingy nf_other_thingy],
         ipv4_destination: '1.2.3.0/24',
-        ipv6_destination: '::1'
+        ipv6_destination: '::1',
       )
     end
 
@@ -137,7 +137,7 @@ describe provider_class do
           '123/tcp',
           '234/udp',
           '345/udp',
-          '456/tcp'
+          '456/tcp',
         ].each do |port|
           expect(provider).to receive(:execute_firewall_cmd).with(['--service', resource[:name], '--add-port', port], nil)
         end
@@ -152,20 +152,20 @@ describe provider_class do
           '123/tcp',
           '234/udp',
           '345/udp',
-          '456/tcp'
+          '456/tcp',
         ].each do |port|
           expect(provider).to receive(:execute_firewall_cmd).with(['--service', resource[:name], '--add-port', port], nil)
         end
 
         ports = [
           { 'port' => '789', 'protocol' => 'udp' },
-          { 'port' => '8910', 'protocol' => 'tcp' }
+          { 'port' => '8910', 'protocol' => 'tcp' },
         ]
         provider.instance_variable_set('@property_hash', ports: ports)
 
         [
           '789/udp',
-          '8910/tcp'
+          '8910/tcp',
         ].each do |port|
           expect(provider).to receive(:execute_firewall_cmd).with(['--service', resource[:name], '--remove-port', port], nil)
         end
@@ -177,19 +177,19 @@ describe provider_class do
         [
           '123/tcp',
           '234/udp',
-          '456/tcp'
+          '456/tcp',
         ].each do |port|
           expect(provider).to receive(:execute_firewall_cmd).with(['--service', resource[:name], '--add-port', port], nil)
         end
 
         ports = [
           { 'port' => '345', 'protocol' => 'udp' },
-          { 'port' => '8910', 'protocol' => 'tcp' }
+          { 'port' => '8910', 'protocol' => 'tcp' },
         ]
         provider.instance_variable_set('@property_hash', ports: ports)
 
         [
-          '8910/tcp'
+          '8910/tcp',
         ].each do |port|
           expect(provider).to receive(:execute_firewall_cmd).with(['--service', resource[:name], '--remove-port', port], nil)
         end
@@ -297,7 +297,7 @@ describe provider_class do
 
       it 'works with overlapping existing modules' do
         [
-          'nf_other_thingy'
+          'nf_other_thingy',
         ].each do |mod|
           expect(provider).to receive(:execute_firewall_cmd).with(['--service', resource[:name], '--add-module', mod], nil)
         end

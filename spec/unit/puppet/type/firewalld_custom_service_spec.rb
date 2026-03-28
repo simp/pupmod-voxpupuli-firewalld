@@ -27,7 +27,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
 
       resource = described_class.new(
         name: 'test',
-        short: short
+        short: short,
       )
 
       expect(resource[:short]).to eq(short)
@@ -39,7 +39,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
       expect do
         described_class.new(
           name: 'test',
-          short: short
+          short: short,
         )
       end.to raise_error(%r{Valid values match})
     end
@@ -51,7 +51,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
 
       resource = described_class.new(
         name: 'test',
-        description: description
+        description: description,
       )
 
       expect(resource[:description]).to eq(description)
@@ -63,7 +63,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
       expect do
         described_class.new(
           name: 'test',
-          description: description
+          description: description,
         )
       end.to raise_error(%r{Valid values match})
     end
@@ -90,8 +90,8 @@ describe Puppet::Type.type(:firewalld_custom_service) do
         '1234/tcp',
         { 'port' => 1234, 'protocol' => 'udp' },
         { 'port' => '1234', 'protocol' => 'sctp' },
-        { 'port' => 1234, 'protocol' => 'dccp' }
-      ]
+        { 'port' => 1234, 'protocol' => 'dccp' },
+      ],
     ]
 
     invalid_ports = [
@@ -102,20 +102,20 @@ describe Puppet::Type.type(:firewalld_custom_service) do
         '1234/tcp',
         { 'port' => 1234, 'protocol' => 'udp' },
         { 'port' => '1234', 'protocol' => 'sctp' },
-        { 'port' => 'bob', 'protocol' => 'dccp' }
-      ]
+        { 'port' => 'bob', 'protocol' => 'dccp' },
+      ],
     ]
 
     out_of_range_ports = [
       '0-100/tcp',
       '1-65536/tcp',
       '0/tcp',
-      '96758/tcp'
+      '96758/tcp',
     ]
 
     invalid_protocols = [
       '1234/bob',
-      { 'port' => 1234, 'protocol' => 'bob' }
+      { 'port' => 1234, 'protocol' => 'bob' },
     ]
 
     valid_ports.each do |port|
@@ -123,7 +123,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
         expect do
           described_class.new(
             name: 'test',
-            ports: port
+            ports: port,
           )
         end.not_to raise_error
       end
@@ -134,7 +134,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
         expect do
           described_class.new(
             name: 'test',
-            ports: port
+            ports: port,
           )
         end.to raise_error(%r{(Ports must match|must specify a protocol)})
       end
@@ -145,7 +145,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
         expect do
           described_class.new(
             name: 'test',
-            ports: port
+            ports: port,
           )
         end.to raise_error(%r{Ports must be between})
       end
@@ -156,7 +156,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
         expect do
           described_class.new(
             name: 'test',
-            ports: protocol
+            ports: protocol,
           )
         end.to raise_error(%r{protocol must be one of})
       end
@@ -169,7 +169,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
 
       resource = described_class.new(
         name: 'test',
-        protocols: protocols
+        protocols: protocols,
       )
 
       expect(resource[:protocols]).to eq(protocols)
@@ -179,7 +179,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
       protocols = [
         '',
         '#foo',
-        'foo bar'
+        'foo bar',
       ]
 
       protocols.each do |protocol|
@@ -187,7 +187,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
           expect do
             described_class.new(
               name: 'test',
-              protocols: protocol
+              protocols: protocol,
             )
           end.to raise_error(%r{Valid values match})
         end
@@ -202,7 +202,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
 
       resource = described_class.new(
         name: 'test',
-        modules: modules
+        modules: modules,
       )
 
       expect(resource[:modules]).to eq(expected_modules)
@@ -212,7 +212,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
       modules = [
         '',
         '#foo',
-        'foo bar'
+        'foo bar',
       ]
 
       modules.each do |mod|
@@ -220,7 +220,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
           expect do
             described_class.new(
               name: 'test',
-              modules: mod
+              modules: mod,
             )
           end.to raise_error(%r{Valid values match})
         end
@@ -232,14 +232,14 @@ describe Puppet::Type.type(:firewalld_custom_service) do
     context 'valid destinations' do
       valid_destinations = [
         '1.2.3.4/5',
-        '2.3.4.5'
+        '2.3.4.5',
       ]
 
       valid_destinations.each do |destination|
         it "accepts #{destination}" do
           resource = described_class.new(
             name: 'test',
-            ipv4_destination: destination
+            ipv4_destination: destination,
           )
 
           expect(resource[:ipv4_destination]).to eq(destination)
@@ -253,7 +253,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
         '1.2.3.4/bob',
         '::1/alice',
         'stuff/24',
-        '::1/128'
+        '::1/128',
       ]
 
       invalid_destinations.each do |destination|
@@ -261,7 +261,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
           expect do
             described_class.new(
               name: 'test',
-              ipv4_destination: destination
+              ipv4_destination: destination,
             )
           end.to raise_error(%r{(invalid address|not an IPv4)})
         end
@@ -273,14 +273,14 @@ describe Puppet::Type.type(:firewalld_custom_service) do
     context 'valid destinations' do
       valid_destinations = [
         '::1/128',
-        '::1'
+        '::1',
       ]
 
       valid_destinations.each do |destination|
         it "accepts #{destination}" do
           resource = described_class.new(
             name: 'test',
-            ipv6_destination: destination
+            ipv6_destination: destination,
           )
 
           expect(resource[:ipv6_destination]).to eq(destination)
@@ -295,7 +295,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
         '::1/alice',
         'stuff/24',
         '1.2.3.4/5',
-        '2.3.4.5'
+        '2.3.4.5',
       ]
 
       invalid_destinations.each do |destination|
@@ -303,7 +303,7 @@ describe Puppet::Type.type(:firewalld_custom_service) do
           expect do
             described_class.new(
               name: 'test',
-              ipv6_destination: destination
+              ipv6_destination: destination,
             )
           end.to raise_error(%r{(invalid address|not an IPv6)})
         end

@@ -39,7 +39,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
       expect do
         described_class.new(
           title: 'SSH from barny',
-          action: 'accepted'
+          action: 'accepted',
         )
       end.to raise_error(%r{Authorized action values are `accept`, `reject`, `drop` or `mark`})
     end
@@ -48,7 +48,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
       expect do
         described_class.new(
           title: 'SSH from barny',
-          action: { 'type' => 'accepted', 'foo' => 'bar' }
+          action: { 'type' => 'accepted', 'foo' => 'bar' },
         )
       end.to raise_error(%r{Rule action hash should contain `action` and `type` keys. Use a string if you only want to declare the action to be `accept` or `reject`})
     end
@@ -57,7 +57,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
       expect do
         described_class.new(
           title: 'SSH from barny',
-          action: { 'type' => 'icmp-admin-prohibited', 'action' => 'accepted' }
+          action: { 'type' => 'icmp-admin-prohibited', 'action' => 'accepted' },
         )
       end.to raise_error(%r{Authorized action values are `accept`, `reject`, `drop` or `mark`})
     end
@@ -72,7 +72,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
         source: '192.168.1.2/32',
         dest: '192.168.99.2/32',
         service: 'ssh',
-        action: 'accept'
+        action: 'accept',
       }
     end
 
@@ -104,7 +104,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
         described_class.new(
           title: 'SSH from barny',
           zone: 'restricted',
-          priority: 'none'
+          priority: 'none',
         )
       end.to raise_error(%r{Priority must be between -32768 and 32767})
     end
@@ -114,7 +114,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
         described_class.new(
           title: 'SSH from barny',
           zone: 'restricted',
-          priority: -32_769
+          priority: -32_769,
         )
       end.to raise_error(%r{Priority must be between -32768 and 32767})
     end
@@ -124,7 +124,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
         described_class.new(
           title: 'SSH from barny',
           zone: 'restricted',
-          priority: 32_768
+          priority: 32_768,
         )
       end.to raise_error(%r{Priority must be between -32768 and 32767})
     end
@@ -134,7 +134,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
         described_class.new(
           title: 'SSH from barny',
           zone: 'restricted',
-          priority: 10
+          priority: 10,
         )
       end.not_to raise_error
     end
@@ -153,7 +153,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
         source: { 'address' => '10.0.1.2/24' },
         service: 'ssh',
         log: { 'level' => 'debug' },
-        action: 'accept'
+        action: 'accept',
       } => 'rule family="ipv4" source address="10.0.1.2/24" service name="ssh" log level="debug" accept',
       ## Test ipset
       {
@@ -164,7 +164,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
         source: { 'ipset' => 'whitelist' },
         service: 'ssh',
         log: { 'level' => 'debug' },
-        action: 'accept'
+        action: 'accept',
       } => 'rule family="ipv4" source ipset="whitelist" service name="ssh" log level="debug" accept',
 
       ## Test destination
@@ -176,7 +176,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
         dest: '10.0.1.2/24',
         service: 'ssh',
         log: { 'level' => 'debug' },
-        action: 'accept'
+        action: 'accept',
       } => 'rule family="ipv4" destination address="10.0.1.2/24" service name="ssh" log level="debug" accept',
 
       ## Test address invertion
@@ -188,7 +188,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
         source: { 'address' => '10.0.1.2/24', 'invert' => true },
         service: 'ssh',
         log: { 'level' => 'debug' },
-        action: 'accept'
+        action: 'accept',
       } => 'rule family="ipv4" source NOT address="10.0.1.2/24" service name="ssh" log level="debug" accept',
       {
         name: 'accept ssh',
@@ -198,7 +198,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
         dest: { 'address' => '10.0.1.2/24', 'invert' => true },
         service: 'ssh',
         log: { 'level' => 'debug' },
-        action: 'accept'
+        action: 'accept',
       } => 'rule family="ipv4" destination NOT address="10.0.1.2/24" service name="ssh" log level="debug" accept',
 
       ## test port
@@ -210,7 +210,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
         dest: '10.0.1.2/24',
         port: { 'port' => '22', 'protocol' => 'tcp' },
         log: { 'level' => 'debug' },
-        action: 'accept'
+        action: 'accept',
       } => 'rule family="ipv4" destination address="10.0.1.2/24" port port="22" protocol="tcp" log level="debug" accept',
 
       ## test forward port
@@ -220,7 +220,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
         family: 'ipv4',
         forward_port: { 'port' => '8080', 'protocol' => 'tcp', 'to_addr' => '10.72.1.10', 'to_port' => '80' },
         zone: 'restricted',
-        log: { 'level' => 'debug' }
+        log: { 'level' => 'debug' },
       } => 'rule family="ipv4" forward-port port="8080" protocol="tcp" to-port="80" to-addr="10.72.1.10" log level="debug"',
 
       ## test icmp-type
@@ -232,7 +232,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
         dest: '10.0.1.2/24',
         icmp_type: 'echo',
         log: { 'level' => 'debug' },
-        action: 'accept'
+        action: 'accept',
       } => 'rule family="ipv4" destination address="10.0.1.2/24" icmp-type name="echo" log level="debug" accept',
 
       ## test reject
@@ -244,7 +244,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
         source: { 'address' => '10.0.1.2/24' },
         service: 'ssh',
         log: { 'level' => 'debug' },
-        action: 'reject'
+        action: 'reject',
       } => 'rule family="ipv4" source address="10.0.1.2/24" service name="ssh" log level="debug" reject',
 
       ## test reject + type (#193)
@@ -256,7 +256,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
         source: { 'address' => '10.0.1.2/24' },
         service: 'ssh',
         log: { 'level' => 'debug' },
-        action: { 'action' => 'reject', 'type' => 'tcp-reset' }
+        action: { 'action' => 'reject', 'type' => 'tcp-reset' },
       } => 'rule family="ipv4" source address="10.0.1.2/24" service name="ssh" log level="debug" reject type="tcp-reset"',
 
     }
@@ -304,7 +304,7 @@ describe Puppet::Type.type(:firewalld_rich_rule) do
         source: '192.168.1.2/32',
         dest: '192.168.99.2/32',
         service: 'ssh',
-        action: 'accept'
+        action: 'accept',
       }
     end
 

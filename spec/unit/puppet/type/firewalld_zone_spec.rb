@@ -63,7 +63,7 @@ describe Puppet::Type.type(:firewalld_zone) do
     context 'with no params' do
       describe 'when validating attributes' do
         [
-          :name
+          :name,
         ].each do |param|
           it "has a #{param} parameter" do
             expect(described_class.attrtype(param)).to eq(:param)
@@ -87,7 +87,7 @@ describe Puppet::Type.type(:firewalld_zone) do
         described_class.new(
           name: 'restricted',
           target: '%%REJECT%%',
-          interfaces: ['eth0']
+          interfaces: ['eth0'],
         )
       end
       let(:provider) do
@@ -146,7 +146,7 @@ describe Puppet::Type.type(:firewalld_zone) do
           icmp_blocks: %w[redirect router-advertisment],
           icmp_block_inversion: true,
           protocols: %w[icmp igmp],
-          sources: ['192.168.2.2', '10.72.1.100']
+          sources: ['192.168.2.2', '10.72.1.100'],
         )
       end
       let(:provider) do
@@ -278,7 +278,7 @@ describe Puppet::Type.type(:firewalld_zone) do
         described_class.new(
           name: 'public',
           ensure: :present,
-          masquerade: true
+          masquerade: true,
         )
       end
       let(:provider) do
@@ -312,7 +312,7 @@ describe Puppet::Type.type(:firewalld_zone) do
           name: 'public',
           ensure: :present,
           sources: '192.168.2.2',
-          icmp_blocks: 'echo-request'
+          icmp_blocks: 'echo-request',
         )
       end
       let(:provider) do
@@ -353,7 +353,7 @@ describe Puppet::Type.type(:firewalld_zone) do
           name: 'public',
           ensure: :present,
           sources: '192.168.2.2',
-          icmp_blocks: 'invalid-request'
+          icmp_blocks: 'invalid-request',
         )
       end
       let(:provider) do

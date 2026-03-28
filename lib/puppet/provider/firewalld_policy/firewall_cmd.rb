@@ -6,7 +6,7 @@ require File.join(File.dirname(__FILE__), '..', 'firewalld.rb')
 
 Puppet::Type.type(:firewalld_policy).provide(
   :firewall_cmd,
-  parent: Puppet::Provider::Firewalld
+  parent: Puppet::Provider::Firewalld,
 ) do
   desc 'Interact with firewall-cmd'
 

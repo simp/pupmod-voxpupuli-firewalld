@@ -13,7 +13,7 @@ describe provider_class do
       service: 'ssh',
       source: '192.168.1.2/32',
       action: 'accept',
-      provider: described_class.name
+      provider: described_class.name,
     )
   end
   let(:provider) { resource.provider }

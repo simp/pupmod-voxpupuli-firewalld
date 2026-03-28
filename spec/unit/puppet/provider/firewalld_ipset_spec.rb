@@ -11,7 +11,7 @@ describe provider_class do
       name: 'white',
       type: 'hash:net',
       entries: ['8.8.8.8'],
-      provider: described_class.name
+      provider: described_class.name,
     )
   end
   let(:provider) { resource.provider }

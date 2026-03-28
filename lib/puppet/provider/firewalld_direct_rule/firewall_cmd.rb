@@ -5,7 +5,7 @@ require File.join(File.dirname(__FILE__), '..', 'firewalld.rb')
 
 Puppet::Type.type(:firewalld_direct_rule).provide(
   :firewall_cmd,
-  parent: Puppet::Provider::Firewalld
+  parent: Puppet::Provider::Firewalld,
 ) do
   desc 'Interact with firewall-cmd'
 
@@ -32,7 +32,7 @@ Puppet::Type.type(:firewalld_direct_rule).provide(
       @resource[:table],
       @resource[:chain],
       @resource[:priority].to_s,
-      parse_args(@resource[:args])
+      parse_args(@resource[:args]),
     ]
     rule.flatten
   end

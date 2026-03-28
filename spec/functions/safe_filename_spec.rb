@@ -7,7 +7,7 @@ describe 'firewalld::safe_filename' do
     {
       'ThisShouldWork' => 'ThisShouldWork',
       'this_should_work' => 'this_should_work',
-      'th1s_Sh0uld_w0rk' => 'th1s_Sh0uld_w0rk'
+      'th1s_Sh0uld_w0rk' => 'th1s_Sh0uld_w0rk',
     }
   end
 
@@ -15,7 +15,7 @@ describe 'firewalld::safe_filename' do
     {
       'This Should Work' => 'This_Should_Work',
       'this should work' => 'this_should_work',
-      'th1s$Sh0uld w0rk!!' => 'th1s_Sh0uld_w0rk__'
+      'th1s$Sh0uld w0rk!!' => 'th1s_Sh0uld_w0rk__',
     }
   end
 
@@ -23,7 +23,7 @@ describe 'firewalld::safe_filename' do
     {
       'ThisShouldWork.test' => 'ThisShouldWork.test',
       'this_should_!work.xml' => 'this_should_--work--xml',
-      'th1s$Sh0uld w0rk!!.test' => 'th1s--Sh0uld--w0rk----.test'
+      'th1s$Sh0uld w0rk!!.test' => 'th1s--Sh0uld--w0rk----.test',
     }
   end
 
@@ -43,7 +43,7 @@ describe 'firewalld::safe_filename' do
     filenames_with_options.each do |k, v|
       opts = {
         'replacement_string' => '--',
-        'file_extension'     => '.test'
+        'file_extension'     => '.test',
       }
 
       is_expected.to run.with_params(k, opts).and_return(v)

@@ -31,7 +31,7 @@ describe Puppet::Type.type(:firewalld_policy) do
                               ingress_zones: [],
                               egress_zones: ['restricted'])
         end.to raise_error(
-          %r{parameter ingress_zones must contain at least one zone}
+          %r{parameter ingress_zones must contain at least one zone},
         )
       end
 
@@ -41,7 +41,7 @@ describe Puppet::Type.type(:firewalld_policy) do
                               ingress_zones: ['public'],
                               egress_zones: [])
         end.to raise_error(
-          %r{parameter egress_zones must contain at least one zone}
+          %r{parameter egress_zones must contain at least one zone},
         )
       end
 
@@ -50,7 +50,7 @@ describe Puppet::Type.type(:firewalld_policy) do
           described_class.new(name: 'unset iz',
                               egress_zones: ['restricted'])
         end.to raise_error(
-          %r{parameter ingress_zones must be an array of strings}
+          %r{parameter ingress_zones must be an array of strings},
         )
       end
 
@@ -59,7 +59,7 @@ describe Puppet::Type.type(:firewalld_policy) do
           described_class.new(name: 'unset ez',
                               ingress_zones: ['public'])
         end.to raise_error(
-          %r{parameter egress_zones must be an array of strings}
+          %r{parameter egress_zones must be an array of strings},
         )
       end
 
@@ -130,7 +130,7 @@ describe Puppet::Type.type(:firewalld_policy) do
           target: '%%REJECT%%',
           ingress_zones: ['public'],
           egress_zones: ['restricted'],
-          icmp_blocks: %w[redirect router-advertisment]
+          icmp_blocks: %w[redirect router-advertisment],
         )
       end
       let(:provider) do
@@ -214,7 +214,7 @@ describe Puppet::Type.type(:firewalld_policy) do
           ensure: :present,
           masquerade: true,
           ingress_zones: ['public'],
-          egress_zones: ['restricted']
+          egress_zones: ['restricted'],
         )
       end
       let(:provider) do
@@ -259,7 +259,7 @@ describe Puppet::Type.type(:firewalld_policy) do
       resource = described_class.new(
         name: 'public2restricted',
         ingress_zones: ['public'],
-        egress_zones: ['restricted']
+        egress_zones: ['restricted'],
       )
       @catalog.add_resource(resource)
 
