@@ -40,7 +40,7 @@ describe Puppet::Type.type(:firewalld_direct_passthrough) do
         name: 'Forward OUTPUT',
         ensure: 'present',
         inet_protocol: 'ipv4',
-        args: '-A OUTPUT -j OUTPUT_filter'
+        args: '-A OUTPUT -j OUTPUT_filter',
       )
     end
 

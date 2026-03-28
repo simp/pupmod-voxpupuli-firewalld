@@ -5,7 +5,7 @@ require File.join(File.dirname(__FILE__), '..', 'firewalld.rb')
 
 Puppet::Type.type(:firewalld_direct_passthrough).provide(
   :firewalld_cmd,
-  parent: Puppet::Provider::Firewalld
+  parent: Puppet::Provider::Firewalld,
 ) do
   desc 'Interact with firewall-cmd'
 
@@ -29,7 +29,7 @@ Puppet::Type.type(:firewalld_direct_passthrough).provide(
     passt = []
     passt << [
       @resource[:inet_protocol],
-      parse_args(@resource[:args])
+      parse_args(@resource[:args]),
     ]
     passt.flatten
   end

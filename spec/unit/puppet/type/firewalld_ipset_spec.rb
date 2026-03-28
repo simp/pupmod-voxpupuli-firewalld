@@ -79,7 +79,7 @@ describe Puppet::Type.type(:firewalld_ipset) do
       expect do
         described_class.new(
           name: 'white black',
-          type: 'hash:net'
+          type: 'hash:net',
         )
       end.to raise_error(%r{IPset name must be a word with no spaces})
     end
@@ -88,7 +88,7 @@ describe Puppet::Type.type(:firewalld_ipset) do
       expect do
         described_class.new(
           name: 'white-blue',
-          type: 'hash:net'
+          type: 'hash:net',
         )
       end.not_to raise_error
     end
@@ -97,7 +97,7 @@ describe Puppet::Type.type(:firewalld_ipset) do
       expect do
         described_class.new(
           name: 'white.blue',
-          type: 'hash:net'
+          type: 'hash:net',
         )
       end.not_to raise_error
     end
@@ -109,7 +109,7 @@ describe Puppet::Type.type(:firewalld_ipset) do
     let(:resource) do
       described_class.new(
         name: 'whitelist',
-        entries: ['192.168.2.2', '10.72.1.100']
+        entries: ['192.168.2.2', '10.72.1.100'],
       )
     end
     let(:provider) do
@@ -149,7 +149,7 @@ describe Puppet::Type.type(:firewalld_ipset) do
       Puppet::Type.type(:firewalld_ipset).new(
         name: 'white',
         type: 'hash:net',
-        entries: ['8.8.8.8/32', '9.9.9.9']
+        entries: ['8.8.8.8/32', '9.9.9.9'],
       )
     end
 
@@ -165,7 +165,7 @@ describe Puppet::Type.type(:firewalld_ipset) do
           name: 'white',
           type: 'hash:net',
           manage_entries: false,
-          entries: ['8.8.8.8/32', '9.9.9.9']
+          entries: ['8.8.8.8/32', '9.9.9.9'],
         )
       end.to raise_error(%r{Ipset should not declare entries if it doesn't manage entries})
     end

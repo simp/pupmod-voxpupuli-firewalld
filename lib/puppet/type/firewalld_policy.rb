@@ -232,7 +232,7 @@ Puppet::Type.newtype(:firewalld_policy) do
   end
 
   autorequire(:firewalld_zone) do
-    (self[:ingress_zones] == :unset ? [] : self[:ingress_zones]) + (self[:egress_zones] == :unset ? [] : self[:egress_zones])
+    ((self[:ingress_zones] == :unset) ? [] : self[:ingress_zones]) + ((self[:egress_zones] == :unset) ? [] : self[:egress_zones])
   end
 
   def purge_resource(res_type)
@@ -260,7 +260,7 @@ Puppet::Type.newtype(:firewalld_policy) do
         name: purge,
         raw_rule: purge,
         ensure: :absent,
-        policy: self[:name]
+        policy: self[:name],
       )
 
       # If the rule exists in --permanent then we should purge it
@@ -282,7 +282,7 @@ Puppet::Type.newtype(:firewalld_policy) do
     catalog.resources.select { |r| r.is_a?(Puppet::Type::Firewalld_service) }.each do |fws|
       if fws[:policy] == self[:name]
         debug("not purging puppet controlled service #{fws[:service]}")
-        puppet_services << (fws[:service]).to_s
+        puppet_services << fws[:service].to_s
       end
     end
     provider.get_services.reject { |p| puppet_services.include?(p) }.each do |purge|
@@ -291,7 +291,7 @@ Puppet::Type.newtype(:firewalld_policy) do
         name: "#{self[:name]}-#{purge}",
         ensure: :absent,
         service: purge,
-        policy: self[:name]
+        policy: self[:name],
       )
 
       purge_resource(res_type)
@@ -316,7 +316,7 @@ Puppet::Type.newtype(:firewalld_policy) do
         port: purge['port'],
         ensure: :absent,
         protocol: purge['protocol'],
-        policy: self[:name]
+        policy: self[:name],
       )
       purge_resource(res_type)
       @ports_purgable = true

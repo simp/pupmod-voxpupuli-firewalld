@@ -11,7 +11,7 @@ describe provider_class do
       name: 'internal',
       description: 'Interface for management',
       interfaces: ['eth0'],
-      provider: described_class.name
+      provider: described_class.name,
     )
   end
   let(:provider) { resource.provider }

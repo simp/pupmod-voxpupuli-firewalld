@@ -26,7 +26,7 @@ describe Puppet::Type.type(:firewalld_direct_rule) do
           table: 'filter',
           chain: 'OUTPUT',
           priority: 1,
-          args: '-p tcp ---dport=22 -j ACCEPT'
+          args: '-p tcp ---dport=22 -j ACCEPT',
         }
       end
 
@@ -54,7 +54,7 @@ describe Puppet::Type.type(:firewalld_direct_rule) do
         table: 'filter',
         chain: 'OUTPUT',
         priority: 4,
-        args: '-p tcp --dport=22 -j ACCEPT'
+        args: '-p tcp --dport=22 -j ACCEPT',
       )
     end
 
@@ -92,7 +92,7 @@ describe Puppet::Type.type(:firewalld_direct_rule) do
         table: 'filter',
         chain: 'FORWARD',
         priority: 10,
-        args: '-i vnet+ -d BGA -j DROP'
+        args: '-i vnet+ -d BGA -j DROP',
       )
     end
 
@@ -124,7 +124,7 @@ describe Puppet::Type.type(:firewalld_direct_rule) do
         table: 'filter',
         chain: 'OUTPUT',
         priority: 1,
-        args: '-p tcp ---dport=22 -j ACCEPT'
+        args: '-p tcp ---dport=22 -j ACCEPT',
       }
     end
 

@@ -27,7 +27,7 @@ Puppet::Type.type(:firewalld_direct_chain).provide(:firewall_cmd, parent: Puppet
     chain << [
       @resource[:inet_protocol],
       @resource[:table],
-      @resource[:name]
+      @resource[:name],
     ]
   end
 end

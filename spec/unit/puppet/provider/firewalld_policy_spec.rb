@@ -12,7 +12,7 @@ describe provider_class do
       description: 'Public to restricted',
       ingress_zones: ['public'],
       egress_zones: ['restricted'],
-      provider: described_class.name
+      provider: described_class.name,
     )
   end
   let(:provider) { resource.provider }
